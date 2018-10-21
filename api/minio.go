@@ -162,7 +162,7 @@ func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *log
 				defer wg.Done()
 
 				err := func() error {
-					log.Info("Sending the object: ", s.Config.Bucket+"/"+*object.Key)
+					log.Info("Sending the object now: ", s.Config.Bucket+"/"+*object.Key)
 					getR, _ := s.Client.GetObjectRequest(&s3.GetObjectInput{
 						Bucket: aws.String(s.Config.Bucket),
 						Key:    object.Key,
@@ -180,12 +180,6 @@ func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *log
 					if err != nil {
 						return err
 					}
-
-					log.Info("putRstr before --> ", putRstr)
-
-					putRstr = strings.Replace(putRstr, "\\", "", -1)
-
-					log.Info("putRstr after --> ", putRstr)
 
 					payload := &common.RequestPayload{
 						S3Endpoint: s.Config.RawEndpoint,
@@ -237,7 +231,7 @@ func (s *Store) DispatchObjects(ctx context.Context, wg sync.WaitGroup) error {
 
 	_, err := url.Parse(webkookEndpoint)
 	if err != nil {
-		return fmt.Errorf("invalid webook URL: %s", err.Error())
+		return fmt.Errorf("invalid webhook URL: %s", err.Error())
 	}
 
 	req, err := http.NewRequest(http.MethodPost, webkookEndpoint, nil)

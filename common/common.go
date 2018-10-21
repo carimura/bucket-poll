@@ -58,7 +58,7 @@ func DoRequest(req *http.Request, httpClient *http.Client) error {
 	}
 
 	if resp.StatusCode > http.StatusAccepted {
-		return fmt.Errorf("unable to submit webhoot successfully, "+
+		return fmt.Errorf("unable to submit webhook, "+
 			"status code: %d, response body: '%s'", resp.StatusCode, string(b))
 	}
 

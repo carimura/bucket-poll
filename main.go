@@ -10,7 +10,6 @@ import (
 )
 
 func start() error {
-
 	ctx := context.Background()
 	s3, err := api.NewFromEnv()
 	if err != nil {
