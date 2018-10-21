@@ -18,7 +18,7 @@ const opAbortDocumentVersionUpload = "AbortDocumentVersionUpload"
 // AbortDocumentVersionUploadRequest generates a "aws/request.Request" representing the
 // client's request for the AbortDocumentVersionUpload operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -118,7 +118,7 @@ const opActivateUser = "ActivateUser"
 // ActivateUserRequest generates a "aws/request.Request" representing the
 // client's request for the ActivateUser operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -211,7 +211,7 @@ const opAddResourcePermissions = "AddResourcePermissions"
 // AddResourcePermissionsRequest generates a "aws/request.Request" representing the
 // client's request for the AddResourcePermissions operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -302,7 +302,7 @@ const opCreateComment = "CreateComment"
 // CreateCommentRequest generates a "aws/request.Request" representing the
 // client's request for the CreateComment operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -402,7 +402,7 @@ const opCreateCustomMetadata = "CreateCustomMetadata"
 // CreateCustomMetadataRequest generates a "aws/request.Request" representing the
 // client's request for the CreateCustomMetadata operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -503,7 +503,7 @@ const opCreateFolder = "CreateFolder"
 // CreateFolderRequest generates a "aws/request.Request" representing the
 // client's request for the CreateFolder operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -605,7 +605,7 @@ const opCreateLabels = "CreateLabels"
 // CreateLabelsRequest generates a "aws/request.Request" representing the
 // client's request for the CreateLabels operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -701,7 +701,7 @@ const opCreateNotificationSubscription = "CreateNotificationSubscription"
 // CreateNotificationSubscriptionRequest generates a "aws/request.Request" representing the
 // client's request for the CreateNotificationSubscription operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -791,7 +791,7 @@ const opCreateUser = "CreateUser"
 // CreateUserRequest generates a "aws/request.Request" representing the
 // client's request for the CreateUser operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -885,7 +885,7 @@ const opDeactivateUser = "DeactivateUser"
 // DeactivateUserRequest generates a "aws/request.Request" representing the
 // client's request for the DeactivateUser operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -981,7 +981,7 @@ const opDeleteComment = "DeleteComment"
 // DeleteCommentRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteComment operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1083,7 +1083,7 @@ const opDeleteCustomMetadata = "DeleteCustomMetadata"
 // DeleteCustomMetadataRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteCustomMetadata operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1179,7 +1179,7 @@ const opDeleteDocument = "DeleteDocument"
 // DeleteDocumentRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteDocument operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1280,7 +1280,7 @@ const opDeleteFolder = "DeleteFolder"
 // DeleteFolderRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteFolder operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1381,7 +1381,7 @@ const opDeleteFolderContents = "DeleteFolderContents"
 // DeleteFolderContentsRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteFolderContents operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1476,7 +1476,7 @@ const opDeleteLabels = "DeleteLabels"
 // DeleteLabelsRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteLabels operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1569,7 +1569,7 @@ const opDeleteNotificationSubscription = "DeleteNotificationSubscription"
 // DeleteNotificationSubscriptionRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteNotificationSubscription operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1659,7 +1659,7 @@ const opDeleteUser = "DeleteUser"
 // DeleteUserRequest generates a "aws/request.Request" representing the
 // client's request for the DeleteUser operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1754,7 +1754,7 @@ const opDescribeActivities = "DescribeActivities"
 // DescribeActivitiesRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeActivities operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1847,7 +1847,7 @@ const opDescribeComments = "DescribeComments"
 // DescribeCommentsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeComments operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -1943,7 +1943,7 @@ const opDescribeDocumentVersions = "DescribeDocumentVersions"
 // DescribeDocumentVersionsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeDocumentVersions operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2100,7 +2100,7 @@ const opDescribeFolderContents = "DescribeFolderContents"
 // DescribeFolderContentsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeFolderContents operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2258,7 +2258,7 @@ const opDescribeGroups = "DescribeGroups"
 // DescribeGroupsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeGroups operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2348,7 +2348,7 @@ const opDescribeNotificationSubscriptions = "DescribeNotificationSubscriptions"
 // DescribeNotificationSubscriptionsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeNotificationSubscriptions operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2433,7 +2433,7 @@ const opDescribeResourcePermissions = "DescribeResourcePermissions"
 // DescribeResourcePermissionsRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeResourcePermissions operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2523,7 +2523,7 @@ const opDescribeRootFolders = "DescribeRootFolders"
 // DescribeRootFoldersRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeRootFolders operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2619,7 +2619,7 @@ const opDescribeUsers = "DescribeUsers"
 // DescribeUsersRequest generates a "aws/request.Request" representing the
 // client's request for the DescribeUsers operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2773,7 +2773,7 @@ const opGetCurrentUser = "GetCurrentUser"
 // GetCurrentUserRequest generates a "aws/request.Request" representing the
 // client's request for the GetCurrentUser operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2867,7 +2867,7 @@ const opGetDocument = "GetDocument"
 // GetDocumentRequest generates a "aws/request.Request" representing the
 // client's request for the GetDocument operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -2966,7 +2966,7 @@ const opGetDocumentPath = "GetDocumentPath"
 // GetDocumentPathRequest generates a "aws/request.Request" representing the
 // client's request for the GetDocumentPath operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3065,7 +3065,7 @@ const opGetDocumentVersion = "GetDocumentVersion"
 // GetDocumentVersionRequest generates a "aws/request.Request" representing the
 // client's request for the GetDocumentVersion operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3164,7 +3164,7 @@ const opGetFolder = "GetFolder"
 // GetFolderRequest generates a "aws/request.Request" representing the
 // client's request for the GetFolder operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3263,7 +3263,7 @@ const opGetFolderPath = "GetFolderPath"
 // GetFolderPathRequest generates a "aws/request.Request" representing the
 // client's request for the GetFolderPath operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3362,7 +3362,7 @@ const opInitiateDocumentVersionUpload = "InitiateDocumentVersionUpload"
 // InitiateDocumentVersionUploadRequest generates a "aws/request.Request" representing the
 // client's request for the InitiateDocumentVersionUpload operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3481,7 +3481,7 @@ const opRemoveAllResourcePermissions = "RemoveAllResourcePermissions"
 // RemoveAllResourcePermissionsRequest generates a "aws/request.Request" representing the
 // client's request for the RemoveAllResourcePermissions operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3573,7 +3573,7 @@ const opRemoveResourcePermission = "RemoveResourcePermission"
 // RemoveResourcePermissionRequest generates a "aws/request.Request" representing the
 // client's request for the RemoveResourcePermission operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3665,7 +3665,7 @@ const opUpdateDocument = "UpdateDocument"
 // UpdateDocumentRequest generates a "aws/request.Request" representing the
 // client's request for the UpdateDocument operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3773,7 +3773,7 @@ const opUpdateDocumentVersion = "UpdateDocumentVersion"
 // UpdateDocumentVersionRequest generates a "aws/request.Request" representing the
 // client's request for the UpdateDocumentVersion operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3881,7 +3881,7 @@ const opUpdateFolder = "UpdateFolder"
 // UpdateFolderRequest generates a "aws/request.Request" representing the
 // client's request for the UpdateFolder operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -3989,7 +3989,7 @@ const opUpdateUser = "UpdateUser"
 // UpdateUserRequest generates a "aws/request.Request" representing the
 // client's request for the UpdateUser operation. The "output" return
 // value will be populated with the request's response once the request completes
-// successfuly.
+// successfully.
 //
 // Use "Send" method on the returned Request to send the API call to the service.
 // the "output" return value is not valid until after Send returns without error.
@@ -4276,7 +4276,7 @@ type Activity struct {
 	ResourceMetadata *ResourceMetadata `type:"structure"`
 
 	// The timestamp when the action was performed.
-	TimeStamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	TimeStamp *time.Time `type:"timestamp"`
 
 	// The activity type.
 	Type *string `type:"string" enum:"ActivityType"`
@@ -4463,7 +4463,7 @@ type Comment struct {
 	Contributor *User `type:"structure"`
 
 	// The time that the comment was created.
-	CreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	CreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The ID of the parent comment.
 	ParentId *string `min:"1" type:"string"`
@@ -4565,7 +4565,7 @@ type CommentMetadata struct {
 	Contributor *User `type:"structure"`
 
 	// The timestamp that the comment was created.
-	CreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	CreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The ID of the user being replied to.
 	RecipientId *string `min:"1" type:"string"`
@@ -6029,7 +6029,7 @@ type DescribeActivitiesInput struct {
 
 	// The timestamp that determines the end time of the activities. The response
 	// includes the activities performed before the specified timestamp.
-	EndTime *time.Time `location:"querystring" locationName:"endTime" type:"timestamp" timestampFormat:"unix"`
+	EndTime *time.Time `location:"querystring" locationName:"endTime" type:"timestamp"`
 
 	// The maximum number of items to return.
 	Limit *int64 `location:"querystring" locationName:"limit" min:"1" type:"integer"`
@@ -6043,7 +6043,7 @@ type DescribeActivitiesInput struct {
 
 	// The timestamp that determines the starting time of the activities. The response
 	// includes the activities performed after the specified timestamp.
-	StartTime *time.Time `location:"querystring" locationName:"startTime" type:"timestamp" timestampFormat:"unix"`
+	StartTime *time.Time `location:"querystring" locationName:"startTime" type:"timestamp"`
 
 	// The ID of the user who performed the action. The response includes activities
 	// pertaining to this user. This is an optional parameter and is only applicable
@@ -7179,6 +7179,8 @@ type DescribeUsersOutput struct {
 	Marker *string `min:"1" type:"string"`
 
 	// The total number of users included in the results.
+	//
+	// Deprecated: TotalNumberOfUsers has been deprecated
 	TotalNumberOfUsers *int64 `deprecated:"true" type:"long"`
 
 	// The users.
@@ -7218,7 +7220,7 @@ type DocumentMetadata struct {
 	_ struct{} `type:"structure"`
 
 	// The time when the document was created.
-	CreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	CreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The ID of the creator.
 	CreatorId *string `min:"1" type:"string"`
@@ -7233,7 +7235,7 @@ type DocumentMetadata struct {
 	LatestVersionMetadata *DocumentVersionMetadata `type:"structure"`
 
 	// The time when the document was updated.
-	ModifiedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ModifiedTimestamp *time.Time `type:"timestamp"`
 
 	// The ID of the parent folder.
 	ParentFolderId *string `min:"1" type:"string"`
@@ -7305,16 +7307,16 @@ type DocumentVersionMetadata struct {
 	_ struct{} `type:"structure"`
 
 	// The timestamp when the content of the document was originally created.
-	ContentCreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ContentCreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The timestamp when the content of the document was modified.
-	ContentModifiedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ContentModifiedTimestamp *time.Time `type:"timestamp"`
 
 	// The content type of the document.
 	ContentType *string `min:"1" type:"string"`
 
 	// The timestamp when the document was first uploaded.
-	CreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	CreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The ID of the creator.
 	CreatorId *string `min:"1" type:"string"`
@@ -7323,7 +7325,7 @@ type DocumentVersionMetadata struct {
 	Id *string `min:"1" type:"string"`
 
 	// The timestamp when the document was last uploaded.
-	ModifiedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ModifiedTimestamp *time.Time `type:"timestamp"`
 
 	// The name of the version.
 	Name *string `min:"1" type:"string"`
@@ -7437,7 +7439,7 @@ type FolderMetadata struct {
 	_ struct{} `type:"structure"`
 
 	// The time when the folder was created.
-	CreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	CreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The ID of the creator.
 	CreatorId *string `min:"1" type:"string"`
@@ -7452,7 +7454,7 @@ type FolderMetadata struct {
 	LatestVersionSize *int64 `type:"long"`
 
 	// The time when the folder was updated.
-	ModifiedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ModifiedTimestamp *time.Time `type:"timestamp"`
 
 	// The name of the folder.
 	Name *string `min:"1" type:"string"`
@@ -8195,10 +8197,10 @@ type InitiateDocumentVersionUploadInput struct {
 	AuthenticationToken *string `location:"header" locationName:"Authentication" min:"1" type:"string"`
 
 	// The timestamp when the content of the document was originally created.
-	ContentCreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ContentCreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The timestamp when the content of the document was modified.
-	ContentModifiedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ContentModifiedTimestamp *time.Time `type:"timestamp"`
 
 	// The content type of the document.
 	ContentType *string `min:"1" type:"string"`
@@ -9464,7 +9466,7 @@ type User struct {
 	_ struct{} `type:"structure"`
 
 	// The time when the user was created.
-	CreatedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	CreatedTimestamp *time.Time `type:"timestamp"`
 
 	// The email address of the user.
 	EmailAddress *string `min:"1" type:"string"`
@@ -9479,7 +9481,7 @@ type User struct {
 	Locale *string `type:"string" enum:"LocaleType"`
 
 	// The time when the user was modified.
-	ModifiedTimestamp *time.Time `type:"timestamp" timestampFormat:"unix"`
+	ModifiedTimestamp *time.Time `type:"timestamp"`
 
 	// The ID of the organization.
 	OrganizationId *string `min:"1" type:"string"`

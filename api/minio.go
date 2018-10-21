@@ -21,8 +21,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/carimura/s3-pollster/common"
 	"github.com/denismakogon/go-structs"
-	"github.com/denismakogon/s3-pollster/common"
 	"github.com/sirupsen/logrus"
 )
 
@@ -135,8 +135,7 @@ func NewFromEndpoint(endpoint string) (*Store, error) {
 }
 
 func NewFromEnv() (*Store, error) {
-	mURL := common.WithDefault("S3_URL",
-		"s3://admin:password@s3:9000/us-east-1/default-bucket")
+	mURL := common.WithDefault("S3_URL", "s3://admin:password@s3:9000/us-east-1/default-bucket")
 	return NewFromEndpoint(mURL)
 }
 
@@ -181,6 +180,12 @@ func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *log
 					if err != nil {
 						return err
 					}
+
+					log.Info("putRstr before --> ", putRstr)
+
+					putRstr = strings.Replace(putRstr, "\\", "", -1)
+
+					log.Info("putRstr after --> ", putRstr)
 
 					payload := &common.RequestPayload{
 						S3Endpoint: s.Config.RawEndpoint,

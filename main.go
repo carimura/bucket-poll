@@ -6,7 +6,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/denismakogon/s3-pollster/api"
+	"github.com/carimura/s3-pollster/api"
 )
 
 func start() error {

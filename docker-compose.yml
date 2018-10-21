@@ -10,13 +10,14 @@ services:
       - MINIO_SECRET_KEY=password
     command: server /data
   pollster:
-    image: denismakogon/s3-pollster:0.0.1
+    image: carimura/pollster
     restart: always
     depends_on:
       - s3
     links:
       - "s3"
     environment:
-      S3_URL: "s3://admin:password@s3:9000/us-east-1/default-bucket"
-      WEBHOOK_ENDPOINT: "https://5d6b3409.ngrok.io/r/app/route"
+      #S3_URL: "s3://admin:password@s3:9000/us-east-1/default-bucket"
+      S3_URL: "http://admin:password@minio.ngrok.io/minio/default-bucket/"
+      WEBHOOK_ENDPOINT: "http://carimura.ngrok.io/t/tools/image-to-slack"
       POLLSTER_BACKOFF: 5
