@@ -21,7 +21,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/carimura/s3-pollster/common"
+	"github.com/carimura/bucket-poll/common"
 	"github.com/denismakogon/go-structs"
 	"github.com/sirupsen/logrus"
 )

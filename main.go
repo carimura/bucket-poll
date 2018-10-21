@@ -6,7 +6,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/carimura/s3-pollster/api"
+	"github.com/carimura/bucket-poll/api"
 )
 
 func start() error {
