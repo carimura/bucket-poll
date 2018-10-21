@@ -1,23 +1,13 @@
 FROM fnproject/go:dev as build-stage
 
-#RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-
 # Set go bin which doesn't appear to be set already.
 ENV GOBIN /go/bin
 
-# build directories
-RUN mkdir /app
-RUN mkdir /go/src/app
-ADD . /go/src/app
-WORKDIR /go/src/app
-
 # Build
-RUN go get -u github.com/golang/dep/...
-RUN dep ensure
-RUN go build -o pollster .
-
+ADD . /go/src/app/vendor/github.com/carimura/bucket-poll
+RUN cd /go/src/app/vendor/github.com/carimura/bucket-poll; go build -o pollster .
 
 # Get Binary
 FROM fnproject/go
-COPY --from=build-stage /go/src/app /
+COPY --from=build-stage /go/src/app/vendor/github.com/carimura/bucket-poll /
 ENTRYPOINT ["/pollster"]

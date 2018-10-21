@@ -7,11 +7,11 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -22,7 +22,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/carimura/bucket-poll/common"
-	"github.com/denismakogon/go-structs"
 	"github.com/sirupsen/logrus"
 )
 
@@ -35,6 +34,11 @@ type Store struct {
 }
 
 func (m *MinioConfig) createStore() *Store {
+	log.Println(m.AccessKeyID)
+	log.Println(m.SecretAccessKey)
+	log.Println(m.Region)
+	log.Println(m.Endpoint)
+
 	client := s3.New(session.Must(session.NewSession(&aws.Config{
 		Credentials:      credentials.NewStaticCredentials(m.AccessKeyID, m.SecretAccessKey, ""),
 		Endpoint:         aws.String(m.Endpoint),
@@ -60,64 +64,18 @@ type MinioConfig struct {
 	RawEndpoint     string `json:"raw_endpoint"`
 }
 
-func (m *MinioConfig) FromURL(s string) error {
-	u, err := url.Parse(s)
-	if err != nil {
-		return err
-	}
-
-	endpoint := u.Host
-
-	var accessKeyID, secretAccessKey string
-	if u.User != nil {
-		accessKeyID = u.User.Username()
-		secretAccessKey, _ = u.User.Password()
-	}
-	useSSL := u.Query().Get("ssl") == "true"
-
-	strs := strings.SplitN(u.Path, "/", 3)
-	if len(strs) < 3 {
-		return errors.New("must provide bucket name and region in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
-	}
-	region := strs[1]
-	bucketName := strs[2]
-	if region == "" {
-		return errors.New("must provide non-empty region in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
-	} else if bucketName == "" {
-		return errors.New("must provide non-empty bucket name in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
-	}
-
-	m.Bucket = bucketName
-	m.Endpoint = endpoint
-	m.Region = region
-	m.AccessKeyID = accessKeyID
-	m.SecretAccessKey = secretAccessKey
-	m.UseSSL = useSSL
-	m.RawEndpoint = s
-
-	return nil
-}
-
-func (m *MinioConfig) ToMap() (map[string]interface{}, error) {
-	return structs.ToMap(m)
-}
-
-func NewFromEndpoint(endpoint string) (*Store, error) {
+func GetStore() (*Store, error) {
 	m := &MinioConfig{}
-	err := m.FromURL(endpoint)
-	if err != nil {
-		return nil, err
-	}
-	logFields, err := m.ToMap()
-	if err != nil {
-		return nil, err
-	}
-
-	logrus.WithFields(logFields).Info("checking / creating s3 bucket")
-
+	m.Bucket = os.Getenv("BUCKET")
+	m.Region = os.Getenv("REGION")
+	m.AccessKeyID = os.Getenv("ACCESS_KEY_ID")
+	m.SecretAccessKey = os.Getenv("SECRET_ACCESS_KEY")
+	m.Endpoint = os.Getenv("STORAGE_URL")
+	m.UseSSL = true
 	store := m.createStore()
+	log.Println("MinioConfig So Far: ", m)
 
-	_, err = store.Client.CreateBucket(&s3.CreateBucketInput{Bucket: aws.String(m.Bucket)})
+	_, err := store.Client.CreateBucket(&s3.CreateBucketInput{Bucket: aws.String(m.Bucket)})
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
@@ -130,14 +88,88 @@ func NewFromEndpoint(endpoint string) (*Store, error) {
 			return nil, fmt.Errorf("unexpected error creating bucket %s: %s", m.Bucket, err.Error())
 		}
 	}
-
+	log.Println("Returning Store!")
 	return store, nil
 }
 
-func NewFromEnv() (*Store, error) {
-	mURL := common.WithDefault("S3_URL", "s3://admin:password@s3:9000/us-east-1/default-bucket")
-	return NewFromEndpoint(mURL)
-}
+// func (m *MinioConfig) FromURL(s string) error {
+// 	u, err := url.Parse(s)
+// 	if err != nil {
+// 		return err
+// 	}
+
+// 	endpoint := u.Host
+
+// 	var accessKeyID, secretAccessKey string
+// 	if u.User != nil {
+// 		accessKeyID = u.User.Username()
+// 		secretAccessKey, _ = u.User.Password()
+// 	}
+// 	useSSL := u.Query().Get("ssl") == "true"
+
+// 	strs := strings.SplitN(u.Path, "/", 3)
+// 	if len(strs) < 3 {
+// 		return errors.New("must provide bucket name and region in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
+// 	}
+// 	region := strs[1]
+// 	bucketName := strs[2]
+// 	if region == "" {
+// 		return errors.New("must provide non-empty region in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
+// 	} else if bucketName == "" {
+// 		return errors.New("must provide non-empty bucket name in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
+// 	}
+
+// 	m.Bucket = bucketName
+// 	m.Endpoint = endpoint
+// 	m.Region = region
+// 	m.AccessKeyID = accessKeyID
+// 	m.SecretAccessKey = secretAccessKey
+// 	m.UseSSL = useSSL
+// 	m.RawEndpoint = s
+
+// 	return nil
+// }
+
+// func (m *MinioConfig) ToMap() (map[string]interface{}, error) {
+// 	return structs.ToMap(m)
+// }
+
+// func NewFromEndpoint(endpoint string) (*Store, error) {
+// 	m := &MinioConfig{}
+// 	err := m.FromURL(endpoint)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	logFields, err := m.ToMap()
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	logrus.WithFields(logFields).Info("checking / creating s3 bucket")
+
+// 	store := m.createStore()
+
+// 	_, err = store.Client.CreateBucket(&s3.CreateBucketInput{Bucket: aws.String(m.Bucket)})
+// 	if err != nil {
+// 		if aerr, ok := err.(awserr.Error); ok {
+// 			switch aerr.Code() {
+// 			case s3.ErrCodeBucketAlreadyOwnedByYou, s3.ErrCodeBucketAlreadyExists:
+// 				// bucket already exists, NO-OP
+// 			default:
+// 				return nil, fmt.Errorf("failed to create bucket %s: %s", m.Bucket, aerr.Message())
+// 			}
+// 		} else {
+// 			return nil, fmt.Errorf("unexpected error creating bucket %s: %s", m.Bucket, err.Error())
+// 		}
+// 	}
+
+// 	return store, nil
+// }
+
+// func NewFromEnv() (*Store, error) {
+// 	mURL := common.WithDefault("S3_URL", "s3://admin:password@s3:9000/us-east-1/default-bucket")
+// 	return NewFromEndpoint(mURL)
+// }
 
 func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *logrus.Entry, input *s3.ListObjectsInput,
 	req *http.Request, httpClient *http.Client) error {
@@ -146,12 +178,21 @@ func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *log
 	if err != nil {
 		return err
 	}
+	log.Println("Response from bucket: ", len(result.Contents), "objects")
+	log.Println("Full Response: ", result)
+
 	fields := logrus.Fields{}
 	fields["current_key"] = *result.Marker
 	fields["objects_found"] = len(result.Contents)
+
 	if result.NextMarker != nil {
 		fields["next_query_key"] = *result.NextMarker
+	} else {
+		// This is causing an infinite loop of a single image
+		// But without something here, it returns a nil pointer at bottom of this func
+		result.NextMarker = result.Marker
 	}
+
 	log = log.WithFields(fields)
 	var b bytes.Buffer
 	if len(result.Contents) > 0 {
@@ -210,6 +251,8 @@ func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *log
 
 			}(wg, object)
 		}
+
+		// This returns a nil pointer error...
 		input.SetMarker(*result.NextMarker)
 	}
 

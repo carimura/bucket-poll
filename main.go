@@ -11,7 +11,7 @@ import (
 
 func start() error {
 	ctx := context.Background()
-	s3, err := api.NewFromEnv()
+	s3, err := api.GetStore()
 	if err != nil {
 		return err
 	}
