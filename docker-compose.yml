@@ -1,23 +1,33 @@
 version: '3'
 services:
-  s3:
-    hostname: s3
-    image: minio/minio
-    ports:
-      - "9091:9000"
-    environment:
-      - MINIO_ACCESS_KEY=admin
-      - MINIO_SECRET_KEY=password
-    command: server /data
+  # s3:
+  #   hostname: s3
+  #   image: minio/minio
+  #   ports:
+  #     - "9091:9000"
+  #   environment:
+  #     - MINIO_ACCESS_KEY=admin
+  #     - MINIO_SECRET_KEY=password
+  #   command: server /data
   pollster:
     image: carimura/pollster
     restart: always
-    depends_on:
-      - s3
-    links:
-      - "s3"
+    # depends_on:
+    #   - s3
+    # links:
+    #   - "s3"
     environment:
-      #S3_URL: "s3://admin:password@s3:9000/us-east-1/default-bucket"
-      S3_URL: "http://admin:password@minio.ngrok.io/minio/default-bucket/"
+      # REGION: "us-east-1"
+      # BUCKET: "default-bucket"
+      # STORAGE_URL: "http://minio.ngrok.io"
+      # WEBHOOK_ENDPOINT: "http://carimura.ngrok.io/t/tools/image-to-slack"
+      # POLLSTER_BACKOFF: 5
+      # ACCESS_KEY_ID: "admin"
+      # SECRET_ACCESS_KEY: "password"
+      REGION: "us-phoenix-1"
+      BUCKET: "imagein"
+      STORAGE_URL: "oracle-serverless-devrel.compat.objectstorage.us-phoenix-1.oraclecloud.com"
       WEBHOOK_ENDPOINT: "http://carimura.ngrok.io/t/tools/image-to-slack"
       POLLSTER_BACKOFF: 5
+      ACCESS_KEY_ID: $ACCESS_KEY
+      SECRET_ACCESS_KEY: $SECRET_KEY
