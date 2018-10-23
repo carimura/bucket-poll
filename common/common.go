@@ -12,8 +12,8 @@ import (
 )
 
 type PreSignedURLs struct {
-	GetURL string `json:"get_url"`
-	PutURL string `json:"put_url"`
+	GetURL    string `json:"get_url"`
+	PutURL    string `json:"put_url"`
 	DeleteURL string `json:"delete_url"`
 }
 
