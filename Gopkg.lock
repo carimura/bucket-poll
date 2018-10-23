@@ -44,12 +44,6 @@
   version = "v1.15.59"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/denismakogon/go-structs"
-  packages = ["."]
-  revision = "8429c561d85c40486058d64b391ec2fa063ba859"
-
-[[projects]]
   name = "github.com/jmespath/go-jmespath"
   packages = ["."]
   revision = "0b12d6b5"
@@ -84,6 +78,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "61b4daa9235a58724c7e0471ab32561c882214fd9ba784ff6665b9e85e0285f5"
+  inputs-digest = "5bb8fb30ef54a3401407bf340a24d70e38198604a3c188ea44c1b8835820848b"
   solver-name = "gps-cdcl"
   solver-version = 1

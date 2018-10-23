@@ -91,34 +91,51 @@ func GetStore() (*Store, error) {
 	return store, nil
 }
 
-func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s3.ListObjectsV2Input, req *http.Request, httpClient *http.Client) error {
+func diffSlices(a, b []string) []string {
+	mb := map[string]bool{}
+	for _, x := range b {
+		mb[x] = true
+	}
+	var ab []string
+	for _, x := range a {
+		if _, ok := mb[x]; !ok {
+			ab = append(ab, x)
+		}
+	}
+
+	return ab
+}
+
+func getObjFromResult(key string, res *s3.ListObjectsV2Output) *s3.Object {
+	for _, b := range res.Contents {
+		if key == *b.Key {
+			return b
+		}
+	}
+	return nil
+}
+
+
+func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s3.ListObjectsV2Input, req *http.Request, httpClient *http.Client, previousKeys []string) ([]string, error) {
 
 	result, err := s.Client.ListObjectsV2WithContext(ctx, input)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	log.Println("Response from bucket: ", len(result.Contents), "objects")
 	log.Println("Full Response: ", result)
-
 	fields := logrus.Fields{}
-
-	if input.StartAfter != nil {
-		log.Println("current marker: ", *input.StartAfter)
-		fields["current_key"] = *result.StartAfter
-	}
 	fields["objects_found"] = len(result.Contents)
 
 	log = log.WithFields(fields)
 	var b bytes.Buffer
+	var newKeys []string
 	if len(result.Contents) > 0 {
-
-		mk := result.Contents[len(result.Contents)-1].Key
-		input.SetStartAfter(*mk)
-
 		for _, object := range result.Contents {
-
+			newKeys = append(newKeys, *object.Key)
+		}
+		for _, objectKey := range diffSlices(newKeys, previousKeys) {
 			go func(object *s3.Object) {
-
 				err := func() error {
 					log.Info("Sending the object now: ", s.Config.Bucket+"/"+*object.Key)
 					getR, _ := s.Client.GetObjectRequest(&s3.GetObjectInput{
@@ -138,7 +155,14 @@ func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s
 					if err != nil {
 						return err
 					}
-
+					deleteR, _ := s.Client.DeleteObjectRequest(&s3.DeleteObjectInput{
+						Bucket: aws.String(s.Config.Bucket),
+						Key:    object.Key,
+					})
+					deleteRstr, err := deleteR.Presign(1 * time.Hour)
+					if err != nil {
+						return err
+					}
 					payload := &common.RequestPayload{
 						S3Endpoint: s.Config.RawEndpoint,
 						Bucket:     s.Config.Bucket,
@@ -146,6 +170,7 @@ func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s
 						PreSignedURLs: common.PreSignedURLs{
 							GetURL: getRstr,
 							PutURL: putRstr,
+							DeleteURL: deleteRstr,
 						},
 					}
 					b.Reset()
@@ -166,12 +191,11 @@ func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s
 					log.Error(err.Error())
 				}
 
-			}(object)
+			}(getObjFromResult(objectKey, result))
 		}
-
 	}
 
-	return nil
+	return newKeys, nil
 }
 
 func (s *Store) DispatchObjects(ctx context.Context) error {
@@ -179,7 +203,7 @@ func (s *Store) DispatchObjects(ctx context.Context) error {
 
 	input := &s3.ListObjectsV2Input{
 		Bucket:  aws.String(s.Config.Bucket),
-		MaxKeys: aws.Int64(10),
+		MaxKeys: aws.Int64(1000),
 	}
 	webkookEndpoint := os.Getenv("WEBHOOK_ENDPOINT")
 	if webkookEndpoint == "" {
@@ -201,10 +225,10 @@ func (s *Store) DispatchObjects(ctx context.Context) error {
 
 	backoff := common.WithDefault("POLLSTER_BACKOFF", "5")
 	intBackoff, _ := strconv.Atoi(backoff)
-
+	var keys []string
 	for {
 
-		err = s.asyncDispatcher(ctx, log, input, req, httpClient)
+		keys, err = s.asyncDispatcher(ctx, log, input, req, httpClient, keys)
 		if err != nil {
 			log.Error(err.Error())
 		}
