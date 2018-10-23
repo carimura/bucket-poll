@@ -4,6 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net"
 	"net/http"
 	"os"
@@ -58,9 +59,9 @@ func DoRequest(req *http.Request, httpClient *http.Client) error {
 	}
 
 	if resp.StatusCode > http.StatusAccepted {
-		return fmt.Errorf("unable to submit webhook, "+
-			"status code: %d, response body: '%s'", resp.StatusCode, string(b))
+		return fmt.Errorf("unable to submit webhook, status code: %d, response body: '%s'", resp.StatusCode, string(b))
 	}
+	log.Printf("request accepted, response: %s", string(b))
 
 	return nil
 }

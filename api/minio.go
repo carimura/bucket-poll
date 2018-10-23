@@ -12,7 +12,6 @@ import (
 	"net/url"
 	"os"
 	"strconv"
-	"sync"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -92,89 +91,9 @@ func GetStore() (*Store, error) {
 	return store, nil
 }
 
-// func (m *MinioConfig) FromURL(s string) error {
-// 	u, err := url.Parse(s)
-// 	if err != nil {
-// 		return err
-// 	}
+func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s3.ListObjectsV2Input, req *http.Request, httpClient *http.Client) error {
 
-// 	endpoint := u.Host
-
-// 	var accessKeyID, secretAccessKey string
-// 	if u.User != nil {
-// 		accessKeyID = u.User.Username()
-// 		secretAccessKey, _ = u.User.Password()
-// 	}
-// 	useSSL := u.Query().Get("ssl") == "true"
-
-// 	strs := strings.SplitN(u.Path, "/", 3)
-// 	if len(strs) < 3 {
-// 		return errors.New("must provide bucket name and region in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
-// 	}
-// 	region := strs[1]
-// 	bucketName := strs[2]
-// 	if region == "" {
-// 		return errors.New("must provide non-empty region in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
-// 	} else if bucketName == "" {
-// 		return errors.New("must provide non-empty bucket name in path of s3 api url. e.g. s3://s3.com/us-east-1/my_bucket")
-// 	}
-
-// 	m.Bucket = bucketName
-// 	m.Endpoint = endpoint
-// 	m.Region = region
-// 	m.AccessKeyID = accessKeyID
-// 	m.SecretAccessKey = secretAccessKey
-// 	m.UseSSL = useSSL
-// 	m.RawEndpoint = s
-
-// 	return nil
-// }
-
-// func (m *MinioConfig) ToMap() (map[string]interface{}, error) {
-// 	return structs.ToMap(m)
-// }
-
-// func NewFromEndpoint(endpoint string) (*Store, error) {
-// 	m := &MinioConfig{}
-// 	err := m.FromURL(endpoint)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	logFields, err := m.ToMap()
-// 	if err != nil {
-// 		return nil, err
-// 	}
-
-// 	logrus.WithFields(logFields).Info("checking / creating s3 bucket")
-
-// 	store := m.createStore()
-
-// 	_, err = store.Client.CreateBucket(&s3.CreateBucketInput{Bucket: aws.String(m.Bucket)})
-// 	if err != nil {
-// 		if aerr, ok := err.(awserr.Error); ok {
-// 			switch aerr.Code() {
-// 			case s3.ErrCodeBucketAlreadyOwnedByYou, s3.ErrCodeBucketAlreadyExists:
-// 				// bucket already exists, NO-OP
-// 			default:
-// 				return nil, fmt.Errorf("failed to create bucket %s: %s", m.Bucket, aerr.Message())
-// 			}
-// 		} else {
-// 			return nil, fmt.Errorf("unexpected error creating bucket %s: %s", m.Bucket, err.Error())
-// 		}
-// 	}
-
-// 	return store, nil
-// }
-
-// func NewFromEnv() (*Store, error) {
-// 	mURL := common.WithDefault("S3_URL", "s3://admin:password@s3:9000/us-east-1/default-bucket")
-// 	return NewFromEndpoint(mURL)
-// }
-
-func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *logrus.Entry, input *s3.ListObjectsInput,
-	req *http.Request, httpClient *http.Client) error {
-
-	result, err := s.Client.ListObjectsWithContext(ctx, input)
+	result, err := s.Client.ListObjectsV2WithContext(ctx, input)
 	if err != nil {
 		return err
 	}
@@ -182,25 +101,23 @@ func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *log
 	log.Println("Full Response: ", result)
 
 	fields := logrus.Fields{}
-	fields["current_key"] = *result.Marker
-	fields["objects_found"] = len(result.Contents)
 
-	if result.NextMarker != nil {
-		fields["next_query_key"] = *result.NextMarker
-	} else {
-		// This is causing an infinite loop of a single image
-		// But without something here, it returns a nil pointer at bottom of this func
-		result.NextMarker = result.Marker
+	if input.StartAfter != nil {
+		log.Println("current marker: ", *input.StartAfter)
+		fields["current_key"] = *result.StartAfter
 	}
+	fields["objects_found"] = len(result.Contents)
 
 	log = log.WithFields(fields)
 	var b bytes.Buffer
 	if len(result.Contents) > 0 {
-		wg.Add(len(result.Contents))
+
+		mk := result.Contents[len(result.Contents)-1].Key
+		input.SetStartAfter(*mk)
+
 		for _, object := range result.Contents {
 
-			go func(wg sync.WaitGroup, object *s3.Object) {
-				defer wg.Done()
+			go func(object *s3.Object) {
 
 				err := func() error {
 					log.Info("Sending the object now: ", s.Config.Bucket+"/"+*object.Key)
@@ -249,23 +166,20 @@ func (s *Store) asyncDispatcher(ctx context.Context, wg sync.WaitGroup, log *log
 					log.Error(err.Error())
 				}
 
-			}(wg, object)
+			}(object)
 		}
 
-		// This returns a nil pointer error...
-		input.SetMarker(*result.NextMarker)
 	}
 
 	return nil
 }
 
-func (s *Store) DispatchObjects(ctx context.Context, wg sync.WaitGroup) error {
+func (s *Store) DispatchObjects(ctx context.Context) error {
 	log := logrus.WithFields(logrus.Fields{"bucketName": s.Config.Bucket})
 
-	input := &s3.ListObjectsInput{
+	input := &s3.ListObjectsV2Input{
 		Bucket:  aws.String(s.Config.Bucket),
 		MaxKeys: aws.Int64(10),
-		Marker:  aws.String(""),
 	}
 	webkookEndpoint := os.Getenv("WEBHOOK_ENDPOINT")
 	if webkookEndpoint == "" {
@@ -290,15 +204,13 @@ func (s *Store) DispatchObjects(ctx context.Context, wg sync.WaitGroup) error {
 
 	for {
 
-		err = s.asyncDispatcher(ctx, wg, log, input, req, httpClient)
+		err = s.asyncDispatcher(ctx, log, input, req, httpClient)
 		if err != nil {
-			return err
+			log.Error(err.Error())
 		}
 
 		time.Sleep(time.Duration(intBackoff) * time.Second)
 	}
-
-	wg.Wait()
 
 	return nil
 }

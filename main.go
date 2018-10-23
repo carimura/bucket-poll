@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"sync"
 
 	"github.com/carimura/bucket-poll/api"
 )
@@ -16,8 +15,7 @@ func start() error {
 		return err
 	}
 
-	var wg sync.WaitGroup
-	return s3.DispatchObjects(ctx, wg)
+	return s3.DispatchObjects(ctx)
 }
 
 func main() {

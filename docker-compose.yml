@@ -12,21 +12,10 @@ services:
   pollster:
     image: carimura/pollster
     restart: always
-    # depends_on:
-    #   - s3
-    # links:
-    #   - "s3"
     environment:
-      # REGION: "us-east-1"
-      # BUCKET: "default-bucket"
-      # STORAGE_URL: "http://minio.ngrok.io"
-      # WEBHOOK_ENDPOINT: "http://carimura.ngrok.io/t/tools/image-to-slack"
-      # POLLSTER_BACKOFF: 5
-      # ACCESS_KEY_ID: "admin"
-      # SECRET_ACCESS_KEY: "password"
       REGION: "us-phoenix-1"
-      BUCKET: "imagein"
-      STORAGE_URL: "oracle-serverless-devrel.compat.objectstorage.us-phoenix-1.oraclecloud.com"
+      BUCKET: "chad-test"
+      STORAGE_URL: "ocimiddleware.compat.objectstorage.us-phoenix-1.oraclecloud.com"
       WEBHOOK_ENDPOINT: "http://carimura.ngrok.io/t/tools/image-to-slack"
       POLLSTER_BACKOFF: 5
       ACCESS_KEY_ID: $ACCESS_KEY
