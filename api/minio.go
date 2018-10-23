@@ -115,7 +115,6 @@ func getObjFromResult(key string, res *s3.ListObjectsV2Output) *s3.Object {
 	return nil
 }
 
-
 func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s3.ListObjectsV2Input, req *http.Request, httpClient *http.Client, previousKeys []string) ([]string, error) {
 
 	result, err := s.Client.ListObjectsV2WithContext(ctx, input)
@@ -168,8 +167,8 @@ func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s
 						Bucket:     s.Config.Bucket,
 						Object:     *object.Key,
 						PreSignedURLs: common.PreSignedURLs{
-							GetURL: getRstr,
-							PutURL: putRstr,
+							GetURL:    getRstr,
+							PutURL:    putRstr,
 							DeleteURL: deleteRstr,
 						},
 					}
@@ -195,7 +194,14 @@ func (s *Store) asyncDispatcher(ctx context.Context, log *logrus.Entry, input *s
 		}
 	}
 
-	return newKeys, nil
+	for _, k := range previousKeys {
+		s.Client.DeleteObject(&s3.DeleteObjectInput{
+			Bucket: aws.String(s.Config.Bucket),
+			Key:    aws.String(k),
+		})
+	}
+
+	return diffSlices(newKeys, previousKeys), nil
 }
 
 func (s *Store) DispatchObjects(ctx context.Context) error {
